@@ -2318,10 +2318,22 @@ bool GraphicsDevice_DX11::DownloadResource(const GPUResource* resourceToDownload
 			bool result = SUCCEEDED(hr);
 			if (result)
 			{
-				uint32_t cpycount = std::max(1u, textureToDownload->desc.Width) * std::max(1u, textureToDownload->desc.Height) * std::max(1u, textureToDownload->desc.Depth);
-				uint32_t cpystride = GetFormatStride(textureToDownload->desc.Format);
-				uint32_t cpysize = cpycount * cpystride;
-				memcpy(dataDest, mappedResource.pData, cpysize);
+				const uint32_t width = std::max(1u, textureToDownload->desc.Width);
+				const uint32_t height = std::max(1u, textureToDownload->desc.Height);
+				const uint32_t depth = std::max(1u, textureToDownload->desc.Depth);
+				const uint32_t stride = GetFormatStride(textureToDownload->desc.Format);
+				char* dst = static_cast<char*>(dataDest);
+
+				for (uint32_t z = 0; z < depth; z++)
+				{
+					char* src = static_cast<char*>(mappedResource.pData) + z * mappedResource.DepthPitch;
+					for (uint32_t y = 0; y < height; y++)
+					{
+						memcpy(dst, src, width * stride);
+						dst += width * stride;
+						src += mappedResource.RowPitch;
+					}
+				}
 				immediateContext->Unmap((ID3D11Resource*)textureDest->resource, 0);
 			}
 
