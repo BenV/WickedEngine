@@ -1,4 +1,4 @@
-#define RAY_BACKFACE_CULLING
+// #define RAY_BACKFACE_CULLING
 #define RAYTRACE_STACK_SHARED
 #include "globals.hlsli"
 #include "raytracingHF.hlsli"
