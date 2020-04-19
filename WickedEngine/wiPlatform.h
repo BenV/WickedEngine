@@ -10,9 +10,9 @@
 #ifdef WINSTORE_SUPPORT
 #include <Windows.UI.Core.h>
 #endif // WINSTORE_SUPPORT
-
 #endif // _WIN32
 
+#define WI_WINDOW_ALWAYS_ACTIVE
 
 namespace wiPlatform
 {
@@ -32,11 +32,11 @@ namespace wiPlatform
 	inline bool IsWindowActive()
 	{
 #ifdef _WIN32
-#ifndef WINSTORE_SUPPORT
+#ifndef WI_WINDOW_ALWAYS_ACTIVE
 		return GetForegroundWindow() == GetWindow();
 #else
 		return true;
-#endif // WINSTORE_SUPPORT
+#endif // WI_WINDOW_ALWAYS_ACTIVE
 #else
 		return true;
 #endif // _WIN32
