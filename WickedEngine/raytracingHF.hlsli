@@ -168,11 +168,11 @@ inline void IntersectTriangle(in Ray ray, inout RayHit bestHit, in BVHPrimitive 
 #ifdef RAY_BACKFACE_CULLING 
 	// if the determinant is negative the triangle is backfacing
 	// if the determinant is close to 0, the ray misses the triangle
-	if (det < 0.000001f)
+	if (det < 0.000000001f)
 		return;
 #else 
 	// ray and triangle are parallel if det is close to 0
-	if (abs(det) < 0.000001f)
+	if (abs(det) < 0.000000001f)
 		return;
 #endif 
 	float invDet = 1 / det;

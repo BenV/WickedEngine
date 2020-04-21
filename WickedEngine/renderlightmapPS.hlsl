@@ -1,4 +1,4 @@
-#define RAY_BACKFACE_CULLING
+//#define RAY_BACKFACE_CULLING
 #include "globals.hlsli"
 #include "raytracingHF.hlsli"
 
